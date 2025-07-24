@@ -11,20 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    - name: Install devkitARM
+    - name: Install devkitARM (via apt packages)
       run: |
         sudo apt-get update
         sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi make
-        # devkitARM specific setup can be added here if needed
 
     - name: Build GBA ROM
       run: |
         make
 
     - name: Upload ROM artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: stepper-32steps-gba
         path: stepper.gba
