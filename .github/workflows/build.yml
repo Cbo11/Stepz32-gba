@@ -1,0 +1,30 @@
+name: Build GBA ROM
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install devkitARM
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi make
+        # devkitARM specific setup can be added here if needed
+
+    - name: Build GBA ROM
+      run: |
+        make
+
+    - name: Upload ROM artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: stepper-32steps-gba
+        path: stepper.gba
